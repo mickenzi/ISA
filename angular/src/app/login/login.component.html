@@ -1,0 +1,21 @@
+<body class="login-content">
+<div class="toolbar">
+</div>
+<div class="login-container" style="margin-top: 10%">
+  <section class="login" id="login">
+    <header>
+      <h2 style="margin-left:120px;">Prijava</h2>
+    </header>
+    <form class="login-form">
+      <input [(ngModel)]="loginDetails.username" [ngModelOptions]="{standalone: true}" autofocus class="login-input"
+             placeholder="Korisnicko ime" required type="text"/>
+      <input [(ngModel)]="loginDetails.password" [ngModelOptions]="{standalone: true}" autofocus
+             class="login-input" placeholder="Lozinka" required type="password"/>
+      <div class="submit-container">
+        <button (click)="loginUser()" class="login-button" style="margin-right: 220px">Prijavi se</button>
+        <button (click)="goBack()" class="login-button">Odustani</button>
+      </div>
+    </form>
+  </section>
+</div>
+</body>

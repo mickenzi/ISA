@@ -1,0 +1,220 @@
+<body class="home-admin-content">
+<div class="toolbar">
+  <button (click)="showHidden()" style="margin-left: 30px;"><img class="menu-img" src="/assets/img/menu.png"></button>
+  <label style="margin-left:100px;">Dobro dosao {{user.username}}</label>
+</div>
+<div *ngIf="flag1" class="menu-container">
+  <button (click)="goToProfile()" class="menu-container-button">Profil</button>
+  <br>
+  <button (click)="showNotifications()" class="menu-container-button" style="margin-top:2px;">Obaveštenja</button>
+  <br>
+  <button (click)="showReviews()" class="menu-container-button" style="margin-top:2px;">Recenzije</button>
+  <br>
+  <button (click)="showComments()" class="menu-container-button" style="margin-top:2px;">Komentari</button>
+  <br>
+  <button (click)="showComplains()" class="menu-container-button" style="margin-top:2px;">Zalbe</button>
+  <br>
+  <button (click)="logOut()" class="menu-container-button" style="margin-top:2px;">Odjavi se</button>
+</div>
+<div class="functionality-user-work-container" style="margin-top: 90px; margin-left: 25px; align-items: center">
+  <img src="/assets/img/crud.png" style="width: 100%; height: 70%"><br>
+  <button (click)="goToHomeAdminUsers()" class="button-1" style="margin-left: auto; margin-right: auto">Rad sa
+    korisnicima
+  </button>
+</div>
+<div class="functionality-financies-container" style="margin-left: 345px; margin-top: -150px">
+  <img src="/assets/img/income.png" style="width: 100%; height: 70%"><br>
+  <button class="button-1" (click)="showFinances()" style="margin-left:auto; margin-right: auto">Finansije</button>
+</div>
+<br>
+<div class="functionality-new-admin-container" style="margin-left: 25px">
+  <img src="/assets/img/newUser.png" style="width: 100%; height: 70%"><br>
+  <button (click)="redirectAdminRegistration()" *ngIf="flag8" class="button-1"
+          style="margin-left:auto;margin-right: auto">Dodaj admina
+  </button>
+</div>
+<div class="functionality-loyality-program-container" style="margin-top: -180px; margin-left: 190px">
+  <img src="/assets/img/loyaliti.png" style="width: 100%; height:70%">
+  <button class="button-1" (click)="showLoyaltyProgram()" style="margin-left:auto;margin-right: auto">Program lojalnosti</button>
+</div>
+<div *ngIf="flag2" class="notification-panel-header">
+  <label class="title" style="margin-left:170px; margin-top:5px; color: black;"> Prikaz notifikacija</label>
+  <button (click)="closeNotification()" class="notification-panel-button"><img class="notification-panel-button-img" src="/assets/img/close.png"></button>
+</div>
+
+<div *ngIf="flag2" class="notification-panel">
+  <table class="table">
+    <tr class="table-header">
+      <th class="header__item">Id</th>
+      <th class="header__item">Naslov</th>
+      <th class="header__item">Korisnik</th>
+      <th class="header__item"></th>
+      <th class="header__item"></th>
+    </tr>
+    <tr *ngFor="let request of requests" class="table-row">
+      <td class="table-data">{{request.id}}</td>
+      <td class="table-data">{{request.title}}</td>
+      <td class="table-data">{{request.username}}</td>
+      <td class="table-data">
+        <button (click)="enableUser(request.username, request.title, request.id)" class="approve-button">Potvrdi
+        </button>
+      </td>
+      <td class="table-data">
+        <button (click)="disableUser(request.username, request.title, request.id)" class="disable-button">Odbij</button>
+      </td>
+    </tr>
+  </table>
+</div>
+<br>
+<div *ngIf="flag3" style="width: 350px; height:170px; margin-left:750px; background-color: lightgrey">
+  <button style="margin-top:3px; margin-left:320px" (click)="closeRejectPanel()">X</button>
+  <input [(ngModel)]="rejectText" [ngModelOptions]="{standalone: true}" placeholder="Unesite razlog"
+         style="width: 95%; height:73%; margin-top:10px; margin-left:4px"
+         type="text"/>
+</div>
+<div *ngIf="flag4" class="notification-panel-header">
+  <label class="title" style="margin-left:170px; margin-top:5px; color: black;"> Prikaz recenzija</label>
+  <button (click)="closeNotification()" class="notification-panel-button"><img class="notification-panel-button-img" src="/assets/img/close.png"></button>
+</div>
+<div *ngIf="flag9" class="financies-panel">
+  <br>
+  <label class="mat-optgroup-label" style="margin-left:20px; font-size: medium">Procenat</label>
+  <input [(ngModel)]="percent" style="margin-left:5px; width:50px" type="text" class="mat-input-element"/>
+  <input type="submit" style="margin-left:3px" id="editPercentButton" value="Izmeni" class="mat-flat-button" (click)="editPercent()"/>
+  <label class="mat-optgroup-label" style="margin-left:100px; font-size: medium">Godišnji prihod</label>
+  <select [(ngModel)]="year" style="margin-left:5px" (ngModelChange)="getYearProfit($event)">
+    <option option="2021">2021</option>
+    <option selected="2022">2022</option>
+  </select>
+  <input [(ngModel)]="yearProfit"  style="margin-left:5px; width: auto" type="text" disabled/>
+  <br>
+  <br>
+  <canvas baseChart style="height: auto; width: auto; background-color: mintcream"
+          [datasets]="barChartData"
+          [labels]="barChartLabels"
+          [type]= "barChartType"></canvas>
+</div>
+<div *ngIf="flag10" class="loyalty-panel">
+  <div style="margin-top:30px; margin-left:20px; width: 150px; height: 130px; background-color: darkgrey">
+    <br>
+    <label style="margin-left: 10px">Tip:</label>
+    <input type="text" style="margin-left: 3px; width: 70px;" disabled [(ngModel)]="gold.name"/>
+    <br>
+    <br>
+    <label style="margin-left: 10px">Broj poena:</label>
+    <input type="text" style="margin-left: 3px; width: 50px;" [(ngModel)]="gold.points"/>
+    <button (click)="editGold(gold.points)" style="margin-top: 10px; margin-left: 30px;" class="button-2">Izmeni</button>
+  </div>
+  <div style="margin-top:-130px; margin-left:190px; width: 150px; height: 130px; background-color: darkgrey">
+    <br>
+    <label style="margin-left: 10px">Tip:</label>
+    <input type="text" style="margin-left: 3px; width: 70px;" disabled [(ngModel)]="silver.name"/>
+    <br>
+    <br>
+    <label style="margin-left: 10px">Broj poena:</label>
+    <input type="text" style="margin-left: 3px; width: 50px;" [(ngModel)]="silver.points"/>
+    <button (click)="editSilver(silver.points)" style="margin-top: 10px; margin-left: 30px;" class="button-2">Izmeni</button>
+  </div>
+  <div style="margin-top:-130px; margin-left:360px; width: 150px; height: 130px; background-color: darkgrey">
+    <br>
+    <label style="margin-left: 10px">Tip:</label>
+    <input type="text" style="margin-left: 3px; width: 70px;" disabled [(ngModel)]="bronze.name"/>
+    <br>
+    <br>
+    <label style="margin-left: 10px">Broj poena:</label>
+    <input type="text" style="margin-left: 3px; width: 50px;" [(ngModel)]="bronze.points"/>
+    <button (click)="editBronze(bronze.points)" style="margin-top: 10px; margin-left: 30px;" class="button-2">Izmeni</button>
+  </div>
+</div>
+<div *ngIf="flag4" class="notification-panel">
+  <table class="table">
+    <tr class="table-header">
+      <th class="header__item">Id</th>
+      <th class="header__item">Komentar</th>
+      <th class="header__item">Ocena</th>
+      <th class="header__item">Odobren</th>
+      <th class="header__item"></th>
+      <th class="header__item"></th>
+      <th class="header__item"></th>
+    </tr>
+    <tr *ngFor="let review of reviews" class="table-row">
+      <td class="table-data">{{review.id}}</td>
+      <td class="table-data">{{review.comment}}</td>
+      <td class="table-data">{{review.grade}}</td>
+      <td class="table-data">{{review.enabled}}</td>
+      <td class="table-data">
+        <button (click)="enableReview(review.id)" *ngIf="!review.enabled" class="approve-button">Potvrdi</button>
+      </td>
+      <td class="table-data">
+        <button (click)="disableReview(review.id)" *ngIf="!review.enabled" class="disable-button">Odbij</button>
+      </td>
+      <td class="table-data">
+        <button (click)="deleteReview(review.id)" *ngIf="review.enabled" class="disable-button">Obrisi</button>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div *ngIf="flag5" class="notification-panel-header">
+  <label class="title" style="margin-left:170px; margin-top:5px; color: black;"> Prikaz komentara</label>
+  <button (click)="closeNotification()" class="notification-panel-button"><img class="notification-panel-button-img" src="/assets/img/close.png"></button>
+</div>
+<div *ngIf="flag5" class="notification-panel">
+  <table class="table">
+    <tr class="table-header">
+      <th class="header__item">Id</th>
+      <th class="header__item">Sadržaj</th>
+      <th class="header__item">Odobren</th>
+      <th class="header__item">Negativan</th>
+      <th class="header__item"></th>
+      <th class="header__item"></th>
+    </tr>
+    <tr *ngFor="let comment of comments" class="table-row">
+      <td class="table-data">{{comment.id}}</td>
+      <td class="table-data">{{comment.content}}</td>
+      <td class="table-data">{{comment.enabled}}</td>
+      <td class="table-data">{{comment.negative}}</td>
+      <td class="table-data">
+        <button (click)="enableComment(comment.id)" *ngIf="!comment.enabled" class="approve-button">Validiraj</button>
+      </td>
+      <td class="table-data">
+        <button (click)="deleteComment(comment.id)" class="disable-button">Obriši</button>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div *ngIf="flag6" class="notification-panel-header">
+  <label class="title" style="margin-left:170px; margin-top:5px; color: black;"> Prikaz žalbi</label>
+  <button (click)="closeNotification()" class="notification-panel-button"><img class="notification-panel-button-img"
+                                                                               src="/assets/img/close.png"></button>
+</div>
+<div *ngIf="flag6" class="notification-panel">
+  <table class="table">
+    <tr class="table-header">
+      <th class="header__item">Id</th>
+      <th class="header__item">Sadržaj</th>
+      <th class="header__item">Odgovor</th>
+      <th class="header__item"></th>
+      <th class="header__item"></th>
+    </tr>
+    <tr *ngFor="let complaint of complains" class="table-row">
+      <td class="table-data">{{complaint.id}}</td>
+      <td class="table-data">{{complaint.content}}</td>
+      <td class="table-data">{{complaint.answered}}</td>
+      <td class="table-data">
+        <button (click)="answer(complaint.id)" *ngIf="!complaint.answered" class="approve-button">Odgovori</button>
+      </td>
+      <td class="table-data">
+        <button (click)="deleteComplaint(complaint.id)" class="disable-button">Obriši</button>
+      </td>
+    </tr>
+  </table>
+</div>
+<div *ngIf="flag7" style="width: 350px; height:170px; margin-left:750px; background-color: lightgrey">
+  <button style="margin-top:3px; margin-left:320px" (click)="closeRejectPanel()">X</button>
+  <input [(ngModel)]="complaint1.content" [ngModelOptions]="{standalone: true}" placeholder="Unesite tekst žalbe"
+         style="width: 95%; height:73%; margin-top:10px; margin-left:4px"
+         type="text"/>
+</div>
+</body>

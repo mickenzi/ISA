@@ -1,0 +1,57 @@
+<body class="home-admin-users-content">
+<div class="toolbar">
+  <button (click)="goToAdminHome()" class="button-2" style="margin-left:30px"> Nazad</button>
+  <button (click)="getAllUsers()" class="button-2" style="margin-left:30px">Prikaz korisnika</button>
+</div>
+<div *ngIf="flag1" class="notification-panel" style="margin-top:100px; margin-left: 5px;">
+  <table class="table">
+    <tr class="table-header">
+      <th class="header__item">Korisnik</th>
+      <th class="header__item">Ime</th>
+      <th class="header__item">Prezime</th>
+      <th class="header__item">Uloga</th>
+      <th class="header__item">Broj penala:</th>
+      <th class="header__item"></th>
+      <th class="header__item"></th>
+    </tr>
+    <tr *ngFor="let user of users" class="table-row">
+      <td class="table-data">{{user.username}}</td>
+      <td class="table-data">{{user.firstName}}</td>
+      <td class="table-data">{{user.lastName}}</td>
+      <td class="table-data">{{user.role}}</td>
+      <td class="table-data">{{user.penalty}}</td>
+      <td class="table-data">
+        <button (click)="getEntities(user.id,user.role,user.username)" *ngIf="!(user.role==='Klijent')"
+                class="approve-button">Prikaz
+          entiteta
+        </button>
+      </td>
+      <td class="table-data">
+        <button (click)="deleteUser(user.id)" class="disable-button">Obrisi</button>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div *ngIf="flag2" class="notification-panel" style="margin-top:100px; margin-left:5px;">
+  <table class="table">
+    <tr class="table-header">
+      <th class="header__item">Instruktor</th>
+      <th class="header__item">Avantura</th>
+      <th class="header__item">Opis</th>
+      <th class="header__item">Adresa</th>
+      <th class="header__item"></th>
+    </tr>
+    <tr *ngFor="let adventure of adventures" class="table-row">
+      <td class="table-data">{{entityOwnerUsername}}</td>
+      <td class="table-data">{{adventure.title}}</td>
+      <td class="table-data">{{adventure.description}}</td>
+      <td class="table-data">{{adventure.address}}</td>
+      <td class="table-data">
+        <button *ngIf="!adventure.reserved" (click)="deleteAdventure(adventure.id)" class="disable-button">Obriši</button>
+      </td>
+    </tr>
+  </table>
+</div>
+
+</body>

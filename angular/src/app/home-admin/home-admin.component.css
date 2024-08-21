@@ -1,0 +1,66 @@
+.home-admin-content {
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin: 0;
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-image: url('src/assets/img/boat.jpg');
+}
+.financies-panel{
+  width: 700px;
+  height: auto;
+  background-color: rgba(78, 89, 103, 1.0);
+  border-style: ridge;
+  margin-left: 585px;
+  margin-top: -350px;
+  padding-right: 10px;
+  padding-left: 10px;
+  padding-bottom: 10px;
+}
+
+.loyalty-panel{
+  width: 530px;
+  height: 180px;
+  background-color: rgba(78, 89, 103, 1.0);
+  border-style: ridge;
+  margin-left: 585px;
+  margin-top: -350px;
+  padding-right: 10px;
+  padding-left: 10px;
+  padding-bottom: 10px;
+}
+
+
+.functionality-new-admin-container {
+  width: 145px;
+  height: 180px;
+  background-color: #F6F8FA;
+  opacity: 1;
+}
+
+.functionality-user-work-container {
+  width: 300px;
+  height: 150px;
+  background-color: #F6F8FA;
+  opacity: 1;
+}
+
+.functionality-loyality-program-container {
+  width: 300px;
+  height: 180px;
+  background-color: #F6F8FA;
+  opacity: 1;
+}
+
+.functionality-financies-container {
+  width: 145px;
+  height: 150px;
+  background-color: #F6F8FA;
+  opacity: 1;
+}
